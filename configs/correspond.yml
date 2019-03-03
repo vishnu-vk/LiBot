@@ -11,26 +11,13 @@ engine:                      # engine settings
 
   polyglot:
     enabled: false           # activate polyglot book
-    books:                   # books
-      - "engines/books/Book.bin"
-      - "engines/books/default.bin"
-      - "engines/books/codekiddy.bin"
-      - "engines/books/DCbook_large.bin"
-      - "engines/books/Elo2400.bin"
-      - "engines/books/final-book.bin"
-      - "engines/books/gavibook.bin"
-      - "engines/books/gavibook-small.bin"
-      - "engines/books/gm2600.bin"
-      - "engines/books/komodo.bin"
-      - "engines/books/KomodoVariety.bin"
-      - "engines/books/Performance.bin"
-      - "engines/books/varied.bin"
-    max_depth: 60             # half move max depth
+    books:standard: "engines/books/Performance.bin"
+    max_depth: 8             # half move max depth
     min_weight: 1            # selects move with highest weight but not below this value
     random: true             # selects move randomly; otherwise select the best but not below the min_weight
   uci_options:               # arbitrary UCI options passed to the engine
     Move Overhead: 100       # increase if your bot flags games too often
-    Threads: 6              # max CPU threads the engine can use
+    Threads: 8              # max CPU threads the engine can use
     Hash: 512                # max memory (in megabytes) the engine can allocate
 # xboard_options:            # arbitrary xboard options passed to the engine
 #   cores: "4"
