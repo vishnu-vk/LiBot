@@ -1,4 +1,4 @@
-token: "DUUXGYSOz6ny70vj"    # lichess OAuth2 Token
+token: "m"    # lichess OAuth2 Token
 url: "https://lichess.org/"  # lichess base URL
 good_luck_messages: # messages sent to chat when game begins
   - "good luck"
