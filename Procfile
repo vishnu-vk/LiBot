@@ -1,1 +1,1 @@
-worker: bash python lichess-bot.py --config bullet
+worker: python lichess-bot.py --config bullet
