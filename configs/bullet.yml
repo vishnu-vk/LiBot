@@ -1,4 +1,4 @@
-token: "c"    # lichess OAuth2 Token
+
 url: "https://lichess.org/"  # lichess base URL
 good_luck_messages: # messages sent to chat when game begins
   - "good luck"
@@ -11,31 +11,26 @@ engine:                      # engine settings
 
   polyglot:
     enabled: false           # activate polyglot book
-    books:standard: "engines/books/Performance.bin" #books
+    books:
+      - "engines/books/default.bin"
+      - "engines/books/Book.bin"
+      - "engines/books/Elo2400.bin"
+      - "engines/books/final-book.bin"
+      - "engines/books/komodo.bin"
+      - "engines/books/gavibook.bin"
+      - "engines/books/gm2600.bin"
+      - "engines/books/Performance.bin"
     max_depth: 8             # half move max depth
-    min_weight: 3             # selects move with highest weight but not below this value
+    min_weight: 1             # selects move with highest weight but not below this value
     random: true             # selects move randomly; otherwise select the best but not below the min_weight
   uci_options:               # arbitrary UCI options passed to the engine
-    Move Overhead: 1000       # increase if your bot flags games too often
-    Threads: 8               # max CPU threads the engine can use
+    Move Overhead: 100       # increase if your bot flags games too often
+    Ponder: true
+    Slow Mover: 30           # slow mover
+    Threads: 4               # max CPU threads the engine can use
     Hash: 256                # max memory (in megabytes) the engine can allocate
-    Contempt: 100
-# xboard_options:            # arbitrary xboard options passed to the engine
-#   cores: "4"
-#   memory: "4096"
-#   egtpath:                 # dir containing egtb, relative to this project
-#     gaviota: "Gaviota path"
-#     nalimov: "Nalimov Path"
-#     scorpio: "Scorpio Path"
-#     syzygy: "Syzygy Path"
-# lczero:                    # lczero specific settings
-#   weights: "engines/latest.txt" # weights file path
-#   threads: 1               # max CPU threads the engine can use
-#   gpu: 0                   # which GPU to use
-#   tempdecay: 15            # ?
-#   noise: true              # ?
+    Skill Level: 20          #
   silence_stderr: false      # some engines (yes you, leela) are very noisy
-  multipv : 100 
 max_concurrent_games: 1      # number of games to play simultaneously
 abort_time: 20               # time to abort a game in seconds when there is no activity
 

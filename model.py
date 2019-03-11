@@ -9,7 +9,6 @@ class Challenge():
         self.variant = c_info["variant"]["key"]
         self.perf_name = c_info["perf"]["name"]
         self.speed = c_info["speed"]
-        self.increment = c_info.get("timeControl", {}).get("increment", -1)
         self.challenger = c_info.get("challenger")
         self.challenger_title = self.challenger.get("title") if self.challenger else None
         self.challenger_is_bot = self.challenger_title == "BOT"
@@ -21,10 +20,8 @@ class Challenge():
     def is_supported_variant(self, supported):
         return self.variant in supported
 
-    def is_supported_time_control(self, supported_speed, supported_increment_max, supported_increment_min):
-        if self.increment < 0:
-            return self.speed in supported_speed
-        return self.speed in supported_speed and self.increment <= supported_increment_max and self.increment >= supported_increment_min
+    def is_supported_speed(self, supported):
+        return self.speed in supported
 
     def is_supported_mode(self, supported):
         return "rated" in supported if self.rated else "casual" in supported
@@ -34,10 +31,8 @@ class Challenge():
             return False
         variants = config["variants"]
         tc = config["time_controls"]
-        inc_max = config.get("max_increment", 180)
-        inc_min = config.get("min_increment", 0)
         modes = config["modes"]
-        return self.is_supported_time_control(tc, inc_max, inc_min) and self.is_supported_variant(variants) and self.is_supported_mode(modes)
+        return self.is_supported_speed(tc) and self.is_supported_variant(variants) and self.is_supported_mode(modes)
 
     def score(self):
         rated_bonus = 200 if self.rated else 0
@@ -61,7 +56,7 @@ class Game():
         self.username = username
         self.id = json.get("id")
         self.speed = json.get("speed")
-        clock = json.get("clock", {}) or {}
+        clock = json.get("clock", {})
         self.clock_initial = clock.get("initial", 1000 * 3600 * 24 * 365 * 10) # unlimited = 10 years
         self.clock_increment = clock.get("increment", 0)
         self.perf_name = json.get("perf").get("name") if json.get("perf") else "{perf?}"
@@ -91,9 +86,6 @@ class Game():
 
     def should_abort_now(self):
         return self.is_abortable() and time.time() > self.abort_at
-
-    def my_remaining_seconds(self):
-        return (self.state["wtime"] if self.is_white else self.state["btime"]) / 1000
 
     def __str__(self):
         return "{} {} vs {}".format(self.url(), self.perf_name, self.opponent.__str__())

@@ -1,4 +1,6 @@
 import requests
+from future.standard_library import install_aliases
+install_aliases()
 from urllib.parse import urljoin
 from requests.exceptions import ConnectionError, HTTPError
 from urllib3.exceptions import ProtocolError
@@ -13,7 +15,6 @@ import backoff
 
 ENDPOINTS = {
     "profile": "/api/account",
-    "playing": "/api/account/playing",
     "stream": "/api/bot/game/stream/{}",
     "stream_event": "/api/stream/event",
     "game": "/api/bot/game/{}",
@@ -97,13 +98,14 @@ class Lichess():
         self.set_user_agent(profile["username"])
         return profile
 
-    def get_ongoing_games(self):
-        ongoing_games = self.api_get(ENDPOINTS["playing"])["nowPlaying"]
-        return ongoing_games
-
     def resign(self, game_id):
         self.api_post(ENDPOINTS["resign"].format(game_id))
 
     def set_user_agent(self, username):
         self.header.update({"User-Agent": "lichess-bot/{} user:{}".format(self.version, username)})
         self.session.headers.update(self.header)
+
+    #########################################################
+
+    def resign_hopeless_game(self, game_id):
+        return self.api_post("https://lichess.org/api/bot/game/{}/resign".format(game_id))

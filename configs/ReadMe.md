@@ -1,1 +1,0 @@
-Your config files for different settings/accounts come here ( bullet.yml, blitz.yml, atomic.yml, nick1.yml, nick2.yml etc. ).

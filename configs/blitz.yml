@@ -1,7 +1,8 @@
-token: "m"    # lichess OAuth2 Token
+
 url: "https://lichess.org/"  # lichess base URL
-good_luck_messages: # messages sent to chat when game begins
+good_luck_messages: 
   - "good luck"
+
 good_game_message: "good game" # message sent to chat when game finishes
 
 engine:                      # engine settings
@@ -11,7 +12,16 @@ engine:                      # engine settings
 
   polyglot:
     enabled: false           # activate polyglot book
-    books:standard: "engines/books/Performance.bin"
+    books:
+      - "engines/books/default.bin"
+      - "engines/books/Book.bin"
+      - "engines/books/Elo2400.bin"
+      - "engines/books/final-book.bin"
+      - "engines/books/komodo.bin"
+      - "engines/books/gavibook.bin"
+      - "engines/books/gm2600.bin"
+      - "engines/books/Performance.bin"
+
     max_depth: 8             # half move max depth
     min_weight: 1            # selects move with highest weight but not below this value
     random: true             # selects move randomly; otherwise select the best but not below the min_weight
@@ -19,6 +29,8 @@ engine:                      # engine settings
     Move Overhead: 950       # increase if your bot flags games too often
     Threads: 8               # max CPU threads the engine can use
     Hash: 256                # max memory (in megabytes) the engine can allocate
+    Ponder: true
+    Skill Level: 20
 
 # xboard_options:            # arbitrary xboard options passed to the engine
 #   cores: "4"
@@ -61,5 +73,5 @@ challenge:                   # incoming challenges
 #   - classical
 #   - correspondence
   modes:                     # game modes to accept
-#    - casual                 # unrated games
+     - casual                 # unrated games
      - rated                  # rated games - must comment if the engine doesn't try to win
